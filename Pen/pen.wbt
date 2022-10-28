@@ -1,0 +1,199 @@
+#VRML_SIM R2021b utf8
+WorldInfo {
+  info [
+    "Example use of a Pen device using evaporating ink."
+  ]
+  title "Pen"
+  inkEvaporation 0.1
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation 0.998919933804892 0.0029697356289864678 -0.04636967238965994 5.228506850418789
+  position 0.08303264451754949 5.257424546521394 4.361341461087365
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  translation 0.325 0 1.04
+  floorSize 0.65 2.08
+  floorTileSize 0.25 0.25
+}
+DEF PINK_BOX Solid {
+  translation 0.49 0.05 1.03
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0.1 0.3
+        roughness 0.16827074099999995
+        metalness 0
+      }
+      geometry DEF BOX3 Box {
+        size 0.28 0.1 0.02
+      }
+    }
+  ]
+  name "red box"
+  boundingObject Shape {
+    appearance PBRAppearance {
+      roughness 1.1102230246251565e-16
+      metalness 0
+    }
+    geometry USE BOX3
+  }
+}
+Robot {
+  translation 0.5 0 0.4
+  rotation 0 1 0 1.57079632679
+  children [
+    GPS {
+      translation 0 0.001 0
+    }
+    Transform {
+      translation 0 0.0415 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.0820075 0.364731 0.8
+            roughness 1
+            metalness 0
+          }
+          geometry DEF BODY Cylinder {
+            height 0.08
+            radius 0.045
+          }
+        }
+      ]
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 26.791497650168814
+        axis -1 0 0
+        anchor -0.045 0.025 0
+      }
+      device [
+        RotationalMotor {
+          name "left wheel motor"
+          consumptionFactor 70
+          maxVelocity 15
+        }
+        PositionSensor {
+          name "left wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation -0.045 0.025 0
+        rotation 1 0 0 3.325913578549531
+        children [
+          DEF WHEEL Transform {
+            rotation 0 0 1 1.57
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 1 0 0
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.025
+                }
+              }
+            ]
+          }
+        ]
+        name "left wheel"
+        boundingObject USE WHEEL
+        physics DEF PHYSICS_WHEEL Physics {
+          density -1
+          mass 0.05
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 26.79149754621642
+        axis -1 0 0
+        anchor 0.045 0.025 0
+      }
+      device [
+        RotationalMotor {
+          name "right wheel motor"
+          consumptionFactor 70
+          maxVelocity 15
+        }
+        PositionSensor {
+          name "right wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0.045 0.025 0
+        rotation 1 0 0 2.9285936825019263
+        children [
+          USE WHEEL
+        ]
+        name "right wheel"
+        boundingObject USE WHEEL
+        physics USE PHYSICS_WHEEL
+      }
+    }
+    DEF SMILE Transform {
+      translation 0 0.025 -0.036
+      rotation 0.7745972408364944 0.44721228048294853 0.4472139204829502 1.8234794
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.721569 0.290196 0.290196
+            roughness 1
+            metalness 0
+          }
+          geometry Cylinder {
+            height 0.018
+            radius 0.009
+            subdivision 3
+          }
+        }
+      ]
+    }
+    Pen {
+      translation 0 0.001 0
+      children [
+        Transform {
+          translation 0 0.07 0
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 1 0.692371 0
+                roughness 0.3707939685999999
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.14
+                radius 0.004
+              }
+            }
+          ]
+        }
+      ]
+      inkColor 0.9607843160629272 0.03921568766236305 0.8666666746139526
+      inkDensity 0.5709707937864315
+      leadSize 0.01
+    }
+  ]
+  name "MyBot"
+  boundingObject Transform {
+    translation 0 0.0415 0
+    children [
+      USE BODY
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 0.5
+    centerOfMass [
+      0 0 0
+    ]
+  }
+  controller "PenGps"
+}
