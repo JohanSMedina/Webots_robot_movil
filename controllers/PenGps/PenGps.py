@@ -2,6 +2,9 @@ from controller import Robot, Motor
 pi = 3.14159265359
 pi2= pi*2
 
+#def defOri():
+
+
 
 def run_robot(robot):
 
@@ -10,6 +13,8 @@ def run_robot(robot):
     #print(trayectoria1[1][1])
 
     xyz = [0,0,0]
+    last_xz = [0,0]
+
     ##Optener el tiepo de pasos de la simulacion
     timestep = 128
     max_speed = pi2###Esta cambiarla para que reciba datos por el serial y cuadre con la simulacion
@@ -41,17 +46,18 @@ def run_robot(robot):
         
         gps_value = gps.getValues() ###x, z, y
         
+        
         for i in range(3):
             #xzy[i] = gps_value[i]
             xyz[i] = float("{:.6f}".format(gps_value[i]))
             
         print(f"Posicion en X: {xyz[0]}, Z: {xyz[2]}")
         
-        
-        
-        
 
-
+        
+        #defOri(xyz[0],xyz[2])
+        
+        
         iMotor.setVelocity(max_speed*0.25)
         dMotor.setVelocity(max_speed*0.25)
 
