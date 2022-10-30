@@ -20,8 +20,8 @@ def movToPoint(angle):
 
 def run_robot(robot):
     #global angle
-    global iMotor
-    global dMotor
+    #global iMotor
+    #global dMotor
 
     nuevaPosicion = [0.5,0.2],[0.2,0.2],[0.2,1.8],[0.5,1.8]
     flagAngle  = True
@@ -30,6 +30,8 @@ def run_robot(robot):
     xz = [0,0]
     last_xz = [0,0]
     pm = True
+    centroRueda = 0.045
+    radioRueda = 0.0
 
     ##Optener el tiepo de pasos de la simulacion
     timestep = 128
