@@ -74,18 +74,33 @@ def run_robot(robot):
         if (last_xz[0] != 0.0 and last_xz[1] != 0.0 and flagAngle == True):##Determinacion del angulo de giro
             flagAngle = False
             angle = angleRot(last_xz,xz,nuevaPosicion[1])###Anterior, actual y final
+            """pasos = 0
+            while (pasos !=20) :
+                pasos += 1
+                print(f"Paso: {pasos}")
+                iMotor.setVelocity(max_speed)
+                dMotor.setVelocity(-max_speed)"""
+            
+
+
+
+
+
+
+
+
 
         ##Reemplazo de los valores anteriores de X Z
         last_xz[0] = xyz[0]
         last_xz[1] = xyz[2]
         
         if(pm==True):
-            iMotor.setVelocity(max_speed)
-            dMotor.setVelocity(max_speed)
+            iMotor.setVelocity(max_speed*0.2)
+            dMotor.setVelocity(max_speed*0.2)
             pm = False
         else:
-            iMotor.setVelocity(0)
-            dMotor.setVelocity(0)
+            iMotor.setVelocity(-max_speed)
+            dMotor.setVelocity(max_speed)
 
     #-----------------------------------#
         #### Final Bucle infinito ####

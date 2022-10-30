@@ -8,8 +8,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.9994680149636891 0.03051786472005851 -0.01150421650837025 4.718077331163336
-  position 0.28440445183267077 2.8770747455220027 1.0988339740916875
+  orientation 0.9605962132412658 -0.22357743369313748 -0.16513039165983795 5.95420927092881
+  position 0.8545352111012207 2.336936012019094 7.233379985237361
 }
 TexturedBackground {
 }
@@ -44,7 +44,7 @@ DEF PINK_BOX Solid {
   }
 }
 Robot {
-  translation 0.5 0 0.2
+  translation 0.5 0 1.5
   children [
     GPS {
       translation 0 0.001 0
@@ -194,5 +194,15 @@ Robot {
       0 0 0
     ]
   }
-  controller "PenGps"
+  controller ""
+}
+TurtleBot3Burger {
+  translation 0.5 0 0.2
+  name "Burger"
+}
+Robot {
+  children [
+    GPS {
+    }
+  ]
 }
