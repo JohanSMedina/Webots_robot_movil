@@ -28,7 +28,6 @@ if __name__ == "__main__":
     #-----------------------------------#
     ###Creacion instancias del sensor###
     #-----------------------------------#
-    ###Creacion instancias del sensor###
     
     sIzqueirda = robot.getPositionSensor('left wheel sensor')
     sIzqueirda.enable(timestep)

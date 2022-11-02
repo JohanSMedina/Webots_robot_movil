@@ -4,12 +4,14 @@ WorldInfo {
     "Example use of a Pen device using evaporating ink."
   ]
   title "Pen"
+  physicsDisableLinearThreshold 0.001
+  physicsDisableAngularThreshold 0.001
   inkEvaporation 0.1
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.9605962132412658 -0.22357743369313748 -0.16513039165983795 5.95420927092881
-  position 0.8545352111012207 2.336936012019094 7.233379985237361
+  orientation 0.9986782588610471 0.01710223238711976 -0.048469051214608934 5.441844653886082
+  position 0.6209989631077673 4.8712876281506885 5.112902232579311
 }
 TexturedBackground {
 }
@@ -44,7 +46,7 @@ DEF PINK_BOX Solid {
   }
 }
 Robot {
-  translation 0.5 0 1.5
+  translation 0.5 0 0.2
   children [
     GPS {
       translation 0 0.001 0
@@ -67,7 +69,6 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 26.791497650168814
         axis -1 0 0
         anchor -0.045 0.025 0
       }
@@ -83,7 +84,7 @@ Robot {
       ]
       endPoint Solid {
         translation -0.045 0.025 0
-        rotation 1 0 0 3.325913578549531
+        rotation 1 0 0 4.9846699999999995
         children [
           DEF WHEEL Transform {
             rotation 0 0 1 1.57
@@ -112,7 +113,6 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 26.79149754621642
         axis -1 0 0
         anchor 0.045 0.025 0
       }
@@ -128,7 +128,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.045 0.025 0
-        rotation 1 0 0 2.9285936825019263
+        rotation 1 0 0 4.58735
         children [
           USE WHEEL
         ]
@@ -194,15 +194,9 @@ Robot {
       0 0 0
     ]
   }
-  controller ""
+  controller "GpsMovilFinal"
 }
 TurtleBot3Burger {
-  translation 0.5 0 0.2
+  translation 0.5 0 1.2
   name "Burger"
-}
-Robot {
-  children [
-    GPS {
-    }
-  ]
 }

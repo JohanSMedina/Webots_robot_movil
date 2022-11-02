@@ -1,3 +1,4 @@
+from cgi import print_environ
 from controller import Robot, Motor
 import math
 pi = 3.14159265359
@@ -19,9 +20,6 @@ def movToPoint(angle):
 
 
 def run_robot(robot):
-    #global angle
-    #global iMotor
-    #global dMotor
 
     nuevaPosicion = [0.5,0.2],[0.2,0.2],[0.2,1.8],[0.5,1.8]
     flagAngle  = True
@@ -31,10 +29,10 @@ def run_robot(robot):
     last_xz = [0,0]
     pm = True
     centroRueda = 0.045
-    radioRueda = 0.0
+    radioRueda = 0.025
 
     ##Optener el tiepo de pasos de la simulacion
-    timestep = 128
+    timestep = 16##Entre ma chiquito mejor
     max_speed = pi2###Esta cambiarla para que reciba datos por el serial y cuadre con la simulacion
 
     #-----------------------------------#
@@ -50,6 +48,19 @@ def run_robot(robot):
     dMotor.setVelocity(0.0)
 
     #-----------------------------------#
+    ###Creacion instancias del sensor###
+    #-----------------------------------#
+    
+    sIzqueirda = robot.getPositionSensor('left wheel sensor')
+    sIzqueirda.enable(timestep)
+    
+    sDerecha = robot.getPositionSensor('right wheel sensor')
+    sDerecha.enable(timestep)
+
+    ps_values = [0,0]
+    dist_values = [0,0]
+
+    #-----------------------------------#
     #### Creacion instancias del GPS ####
     #-----------------------------------# 
     
@@ -61,6 +72,11 @@ def run_robot(robot):
     #-----------------------------------# 
 
     while robot.step(timestep) != -1:
+        SensorD = sDerecha.getValue()
+        print(SensorD)
+        SensorI =sIzqueirda.getValue()
+        print(SensorI)
+        print("-----")
         
         gps_value = gps.getValues() ###x, z, y
     
@@ -71,17 +87,23 @@ def run_robot(robot):
         xz[0]=xyz[0]
         xz[1]=xyz[2]
 
-        print(f"Posicion en X: {xz[0]}, Z: {xz[1]}")
+        #print(f"Posicion en X: {xz[0]}, Z: {xz[1]}")
         
         if (last_xz[0] != 0.0 and last_xz[1] != 0.0 and flagAngle == True):##Determinacion del angulo de giro
             flagAngle = False
             angle = angleRot(last_xz,xz,nuevaPosicion[1])###Anterior, actual y final
+
+            
+            
             """pasos = 0
             while (pasos !=20) :
                 pasos += 1
                 print(f"Paso: {pasos}")
                 iMotor.setVelocity(max_speed)
                 dMotor.setVelocity(-max_speed)"""
+        
+        propAngle = centroRueda/(radioRueda*SensorD)
+        #print(f"Rad sensor {sDerecha.getValue()} y angulo robot {propAngle}")
             
 
 
@@ -101,7 +123,7 @@ def run_robot(robot):
             dMotor.setVelocity(max_speed*0.2)
             pm = False
         else:
-            iMotor.setVelocity(-max_speed)
+            iMotor.setVelocity(max_speed)
             dMotor.setVelocity(max_speed)
 
     #-----------------------------------#

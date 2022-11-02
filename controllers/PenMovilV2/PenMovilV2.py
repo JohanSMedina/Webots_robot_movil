@@ -66,8 +66,8 @@ def run_robot(robot):
         print(gps_value)
 
         posx = gps_value[0]
-        posx = gps_value[0]
-        posx = gps_value[0]
+        #posx = gps_value[0]
+        #posx = gps_value[0]
         print(posx)
 
         print("---------------------------")
