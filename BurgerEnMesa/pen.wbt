@@ -10,8 +10,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.9986782588610471 0.01710223238711976 -0.048469051214608934 5.441844653886082
-  position 0.6209989631077673 4.8712876281506885 5.112902232579311
+  orientation 1 0 0 4.71238898038469
+  position 0.40842185687136023 2.538021896635899 0.3666106634960543
 }
 TexturedBackground {
 }
@@ -46,7 +46,8 @@ DEF PINK_BOX Solid {
   }
 }
 Robot {
-  translation 0.5 0 0.2
+  translation 0.2 -0.00023925 0.2
+  rotation 5.308086323970887e-07 0.9999999999998588 1.8639748537097592e-08 -3.141592653589586
   children [
     GPS {
       translation 0 0.001 0
@@ -69,6 +70,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
+        position -8.547473839826125e-11
         axis -1 0 0
         anchor -0.045 0.025 0
       }
@@ -84,7 +86,7 @@ Robot {
       ]
       endPoint Solid {
         translation -0.045 0.025 0
-        rotation 1 0 0 4.9846699999999995
+        rotation 1 0 0 4.984670008718445
         children [
           DEF WHEEL Transform {
             rotation 0 0 1 1.57
@@ -113,6 +115,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
+        position -4.200284564603862e-11
         axis -1 0 0
         anchor 0.045 0.025 0
       }
@@ -128,7 +131,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.045 0.025 0
-        rotation 1 0 0 4.58735
+        rotation 1 0 0 4.587350004284292
         children [
           USE WHEEL
         ]
@@ -194,9 +197,10 @@ Robot {
       0 0 0
     ]
   }
-  controller "GpsMovilFinal"
+  controller "GiroSensorGPS"
 }
 TurtleBot3Burger {
-  translation 0.5 0 1.2
+  translation 0.06230990598447612 -0.0006971359038815683 0.03344818666570994
+  rotation 0.5676847991569235 0.2868354075926007 -0.7716601698658224 0.011407814553169908
   name "Burger"
 }
