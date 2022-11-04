@@ -86,7 +86,7 @@ Robot {
       ]
       endPoint Solid {
         translation -0.045 0.025 0
-        rotation 1 0 0 4.984670008718445
+        rotation 1 0 0 4.984670011624596
         children [
           DEF WHEEL Transform {
             rotation 0 0 1 1.57
@@ -131,7 +131,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.045 0.025 0
-        rotation 1 0 0 4.587350004284292
+        rotation 1 0 0 4.587350005712389
         children [
           USE WHEEL
         ]
