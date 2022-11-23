@@ -13,6 +13,7 @@ def run_robot(robot):
     xz = [0,0]
     last_xz = [0.2,0.1]
     flagGiro = True
+    moverse = False
     sDerecha = 0.0
     sIzquierda = 0.0
     
@@ -41,6 +42,8 @@ def run_robot(robot):
         xz[0] = float("{:.8f}".format(gps_value[0]))
         xz[1] = float("{:.8f}".format(gps_value[2]))
         print(f"Posicion en X: {xz[0]}, Z: {xz[1]}")#!Quitar para cuando ya esté terminado el codigo
+        valposi = sIzquierda.getValue()
+        valposd = sDerecha.getValue()
 
         if(posActual < sizeNP and flagGiro == True and posActual != 0):
 
@@ -49,73 +52,76 @@ def run_robot(robot):
 
                 if(last_xz[1]<xz[1]):##* Si enterior z es menor que el actual mira para abajo en la simulacion
 
-                    if(nuevaPosicion[posActual][0]<xz[0]):##* Girar a la dereccha x nueva menor qeu la actual
+                    if(nuevaPosicion[posActual][0]<xz[0]):##* Girar a la dereccha x nueva menor que la actual
+                        #! ESTE ES EL CASO QUE ESTAMS MIRANDO
                         iMotor.setVelocity(max_speed)
                         dMotor.setVelocity(max_speed)
-                        sIzquierda = sIzquierda.getValue()+3.14159265359
-                        sDerecha = sDerecha.getValue()-3.14159265359
-                        print(f"sIzquierda: {sIzquierda}, sDerecha: {sDerecha}")
-                        iMotor.setPosition(sIzquierda)##TODO GIRO A LA DERECHA 90°
-                        dMotor.setPosition(sDerecha)
+                        izq = valposi+3.14159265359
+                        der = valposd-3.14159265359
+                        iMotor.setPosition(izq)##TODO GIRO A LA DERECHA 90°
+                        dMotor.setPosition(der)
+                        compararGiro = True
 
-                    else:##* girar a la izquierda
+                    else:##* girar a la izquierda ##TODO GIRO A LA IZQUIERDA 90°
                         iMotor.setVelocity(max_speed)
                         dMotor.setVelocity(max_speed)
-                        iMotor.setPosition(sIzquierda.getValue()-3.14159265359)##TODO GIRO A LA IZQUIERDA 90°
-                        dMotor.setPosition(sDerecha.getValue()+3.14159265359)
-                        sIzquierda = sIzquierda.getValue()
-                        sDerecha = sDerecha.getValue()
+                        izq = valposi-3.14159265359
+                        der = valposd+3.14159265359
+                        iMotor.setPosition(izq)##TODO GIRO A LA Izquiera 90°
+                        dMotor.setPosition(der)
+                        compararGiro = True
+
                 else:
 
                     if(nuevaPosicion[posActual][0]<xz[0]):##* Si la nueva x es mayor que la actual gira a la izquierda
-                        iMotor.setVelocity(max_speed)
+                        """iMotor.setVelocity(max_speed)
                         dMotor.setVelocity(max_speed)
                         iMotor.setPosition(sIzquierda.getValue()+3.14159265359)##TODO GIRO A LA DERECHA 90°
                         dMotor.setPosition(sDerecha.getValue()-3.14159265359)
                         sIzquierda = sIzquierda.getValue()
-                        sDerecha = sDerecha.getValue()
+                        sDerecha = sDerecha.getValue()"""
                     else:##*girar a la derecha
-                        iMotor.setVelocity(max_speed)
+                        """iMotor.setVelocity(max_speed)
                         dMotor.setVelocity(max_speed)
                         iMotor.setPosition(sIzquierda.getValue()+3.14159265359)##TODO GIRO A LA IZQUIERDA 90°
                         dMotor.setPosition(sDerecha.getValue()-3.14159265359)
                         sIzquierda = sIzquierda.getValue()
-                        sDerecha = sDerecha.getValue()
+                        sDerecha = sDerecha.getValue()"""
             
             else:###* Sentido de giro si x es igual
 
-                if(last_xz[0]<xz[0]):#Si enterior x es menor que el actual mira para la pared de la mesa
+                if(last_xz[0]<xz[0]):#* Si enterior x es menor que el actual mira para la pared de la mesa
                     
                     if(nuevaPosicion[posActual][1]<xz[1]):#TODO GIRA A LA IZQUIERDA 90°
-                        iMotor.setVelocity(max_speed)
+                        """iMotor.setVelocity(max_speed)
                         dMotor.setVelocity(max_speed)
                         iMotor.setPosition(sIzquierda.getValue()-3.14159265359)##TODO GIRO A LA IZQUIERDA 90°
                         dMotor.setPosition(sDerecha.getValue()+3.14159265359)
                         sIzquierda = sIzquierda.getValue()
-                        sDerecha = sDerecha.getValue()
+                        sDerecha = sDerecha.getValue()"""
                     else:#TODO GIRO A LA DERECHA 90°
-                        iMotor.setVelocity(max_speed)
+                       """iMotor.setVelocity(max_speed)
                         dMotor.setVelocity(max_speed)
                         iMotor.setPosition(sIzquierda.getValue()+3.14159265359)##TODO GIRO A LA DERECHA 90°
                         dMotor.setPosition(sDerecha.getValue()-3.14159265359)
                         sIzquierda = sIzquierda.getValue()
-                        sDerecha = sDerecha.getValue()
+                        sDerecha = sDerecha.getValue()"""
                 else:
                     if(nuevaPosicion[posActual][1]<xz[1]):##TODO GIRO A LA DERECHA 90°
-                        iMotor.setVelocity(max_speed)
+                        """iMotor.setVelocity(max_speed)
                         dMotor.setVelocity(max_speed)
                         iMotor.setPosition(sIzquierda.getValue()+3.14159265359)##TODO GIRO A LA DERECHA 90°
                         dMotor.setPosition(sDerecha.getValue()-3.14159265359)
                         sIzquierda = sIzquierda.getValue()
-                        sDerecha = sDerecha.getValue()
+                        sDerecha = sDerecha.getValue()"""
 
                     else:
-                        iMotor.setVelocity(max_speed)
+                        """iMotor.setVelocity(max_speed)
                         dMotor.setVelocity(max_speed)
                         iMotor.setPosition(sIzquierda.getValue()-3.14159265359)##TODO GIRO A LA IZQUIERDA 90°
                         dMotor.setPosition(sDerecha.getValue()+3.14159265359)
                         sIzquierda = sIzquierda.getValue()
-                        sDerecha = sDerecha.getValue()
+                        sDerecha = sDerecha.getValue()"""
 
             #print(posActual)
             #print(f"nuevaPosicion[posActual][0]: {nuevaPosicion[posActual][0]}, xz[0]: {xz[0]}, nuevaPosicion[posActual][1]: {nuevaPosicion[posActual][1]}, xz[1]: {xz[1]}")
@@ -125,13 +131,28 @@ def run_robot(robot):
             print(posActual)
             ##TODO Termina el codigo para los giros de orientacio
         
-        if(flagGiro==False and compararGiro == True):
-            saIzquierda = sIzquierda.getValue()
-            saDerecha = sDerecha.getValue()
-            print(f"saDerecha: {saDerecha}, sDerecha: {sDerecha}\nsIzquierda: {sIzquierda}, saIzquierda: {saIzquierda}")
+        """if(compararGiro == True):
+            sIzquierda = sIzquierda.getValue()
+            sDerecha = sDerecha.getValue()
+            
+            #saIzquierda = sIzquierda.getValue()
+            #saDerecha = sDerecha.getValue()
+            print(f"saDerecha: {sa  Derecha}, sDerecha: {sDerecha}\nsIzquierda: {sIzquierda}, saIzquierda: {saIzquierda}")
+            
+            if(sIzquierda == sIzquierda and sDerecha == sDerecha):
+                print("ya giró todo")"""
 
-            if(saIzquierda == sIzquierda and saDerecha == sDerecha):
-                print("ya giró todo")
+        if (compararGiro == True and moverse == False):
+            if((valposd-der) <=0.001 and (valposi-izq) <=0.001):
+                    print("Llego a punto")
+                    compararGiro = False
+                    moverse = True
+        
+        if(moverse == True):
+            iMotor.setPosition(float('inf'))
+            iMotor.setVelocity(max_speed)
+            dMotor.setPosition(float('inf'))
+            dMotor.setVelocity(max_speed)
         
         
         compararGiro = True

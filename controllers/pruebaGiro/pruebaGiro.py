@@ -19,16 +19,37 @@ def run_robot(robot):
     ps_values = [0,0]
     dist_values = [0,0]
     cont = 0 
+    compararGiro = False
+    moverse = False
 
     while robot.step(timestep) != -1:
-        iMotor.setVelocity(max_speed)
-        dMotor.setVelocity(max_speed)
+        valposi = sIzquierda.getValue()
+        valposd = sDerecha.getValue()
+        print(f"ValPosI: {valposi}, ValPosD: {valposd}")
 
-        if(cont == 0):
+        if(compararGiro == False and moverse==False):
             print(cont)
-            iMotor.setPosition(sIzquierda.getValue()+3.14159265359)
-            dMotor.setPosition(sDerecha.getValue()-3.14159265359)
-            cont = 1
+            iMotor.setVelocity(max_speed)
+            dMotor.setVelocity(max_speed)
+            izq = valposi+3.14159265359
+            der = valposd-3.14159265359
+            iMotor.setPosition(izq)
+            dMotor.setPosition(der)
+            compararGiro = True
+
+        if (compararGiro == True and moverse == False):
+            if((valposd-der) <=0.001 and (valposi-izq) <=0.001):
+                    print("Llego a punto")
+                    compararGiro = False
+                    moverse = True
+        
+        if(moverse == True):
+            iMotor.setPosition(float('inf'))
+            iMotor.setVelocity(max_speed)
+            dMotor.setPosition(float('inf'))
+            dMotor.setVelocity(max_speed)
+
+                    
 
 ### *Llamado a la funcion main##
 if __name__ == "__main__":

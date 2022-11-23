@@ -86,7 +86,7 @@ Robot {
       ]
       endPoint Solid {
         translation -0.045 0.025 0
-        rotation 1 0 0 4.984670011624596
+        rotation 0.9999999999999999 0 0 4.984670015641921
         children [
           DEF WHEEL Transform {
             rotation 0 0 1 1.57
@@ -131,7 +131,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.045 0.025 0
-        rotation 1 0 0 4.587350005712389
+        rotation 1 0 0 4.587350007686524
         children [
           USE WHEEL
         ]
@@ -197,10 +197,5 @@ Robot {
       0 0 0
     ]
   }
-  controller "GiroSensorGPS"
-}
-TurtleBot3Burger {
-  translation 0.06230990598447612 -0.0006971359038815683 0.03344818666570994
-  rotation 0.5676847991569235 0.2868354075926007 -0.7716601698658224 0.011407814553169908
-  name "Burger"
+  controller "pruebaGiro"
 }
