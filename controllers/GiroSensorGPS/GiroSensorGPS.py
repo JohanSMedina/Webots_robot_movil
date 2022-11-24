@@ -20,7 +20,7 @@ def run_robot(robot):
     print(f"Vector posicion {nuevaPosicion}")
 
     sizeNP = int(numpy.size(nuevaPosicion)/2)
-    posActual = 1
+    posDestino = 1
     compararGiro = False
     xz = [0,0]
     last_xz = [0.2,0.1]
@@ -57,16 +57,16 @@ def run_robot(robot):
         print(f"Posicion en X: {xz[0]}, Z: {xz[1]}")#!Quitar para cuando ya esté terminado el codigo
         valposi = sIzquierda.getValue()
         valposd = sDerecha.getValue()
-        print(posActual)
+        print(posDestino)
 
-        if(posActual < sizeNP and flagGiro == True and posActual != 0):
+        if(posDestino < sizeNP and flagGiro == True and posDestino != 0):
 
-            if(xz[1]==nuevaPosicion[posActual][1]):###* Sentido de giro si z es igual
-                print(f"XZ actual {xz}, posicion siguente {nuevaPosicion[posActual]}")
+            if(xz[1]==nuevaPosicion[posDestino][1]):###* Sentido de giro si z es igual
+                print(f"XZ actual {xz}, posicion siguente {nuevaPosicion[posDestino]}")
 
                 if(last_xz[1]<xz[1]):##* Si enterior z es menor que el actual mira para abajo en la simulacion
 
-                    if(nuevaPosicion[posActual][0]<xz[0]):##* Girar a la dereccha x nueva menor que la actual
+                    if(nuevaPosicion[posDestino][0]<xz[0]):##* Girar a la dereccha x nueva menor que la actual
                         #! ESTE ES EL CASO QUE ESTAMS MIRANDO
                         iMotor.setVelocity(max_speed)
                         dMotor.setVelocity(max_speed)
@@ -87,7 +87,7 @@ def run_robot(robot):
 
                 else:
 
-                    if(nuevaPosicion[posActual][0]<xz[0]):##* Si la nueva x es mayor que la actual gira a la izquierda
+                    if(nuevaPosicion[posDestino][0]<xz[0]):##* Si la nueva x es mayor que la actual gira a la izquierda
                         iMotor.setVelocity(max_speed)
                         dMotor.setVelocity(max_speed)
                         izq = valposi+3.14159265359
@@ -108,7 +108,7 @@ def run_robot(robot):
 
                 if(last_xz[0]<xz[0]):#* Si enterior x es menor que el actual mira para la pared de la mesa
                     
-                    if(nuevaPosicion[posActual][1]<xz[1]):#TODO GIRA A LA IZQUIERDA 90°
+                    if(nuevaPosicion[posDestino][1]<xz[1]):#TODO GIRA A LA IZQUIERDA 90°
                         iMotor.setVelocity(max_speed)
                         dMotor.setVelocity(max_speed)
                         izq = valposi-3.14159265359
@@ -125,7 +125,7 @@ def run_robot(robot):
                         dMotor.setPosition(der)
                         compararGiro = True
                 else:
-                    if(nuevaPosicion[posActual][1]<xz[1]):##TODO GIRO A LA DERECHA 90°
+                    if(nuevaPosicion[posDestino][1]<xz[1]):##TODO GIRO A LA DERECHA 90°
                         iMotor.setVelocity(max_speed)
                         dMotor.setVelocity(max_speed)
                         izq = valposi+3.14159265359
@@ -145,12 +145,12 @@ def run_robot(robot):
 
             
             flagGiro = False
-            #posActual += 1
-            print(posActual)
+            #posDestino += 1
+            print(posDestino)
             ##TODO Termina el codigo para los giros de orientacio   
 
         if (compararGiro == True and moverse == False):
-            if((valposd-der) <=0.001 and (valposi-izq) <=0.001):
+            if((valposd - der) <= 0.001 and (valposi - izq) <= 0.001):
                     print("Terminó el giro")
                     compararGiro = False
                     moverse = True
@@ -161,7 +161,7 @@ def run_robot(robot):
             dMotor.setPosition(float('inf'))
             dMotor.setVelocity(max_speed)
 
-        PosQuerida = nuevaPosicion[1]
+        PosQuerida = nuevaPosicion[posDestino]
         posx = PosQuerida[0]
         posy = PosQuerida[1]
 
@@ -170,10 +170,11 @@ def run_robot(robot):
             iMotor.setVelocity(0)
             dMotor.setPosition(float('inf'))
             dMotor.setVelocity(0)
-            posActual+=1
-            moverse = False
-            flagGiro = True
-            compararGiro = False
+            posDestino+=1
+            if(posDestino != 9):
+                moverse = False
+                flagGiro = True
+                compararGiro = False
         
         compararGiro = True
         print("----------------------------------------------------------------------------------------")
