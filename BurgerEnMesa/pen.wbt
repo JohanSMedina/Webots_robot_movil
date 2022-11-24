@@ -12,9 +12,8 @@ WorldInfo {
 }
 Viewpoint {
   orientation 1 0 0 4.71238898038469
-  position 0.2990186278457151 1.7048789779622242 0.29174685302095815
+  position 0.4198679535158218 2.019278635827439 0.24562115620030675
   follow "MyBot"
-  followType "None"
 }
 TexturedBackground {
 }
@@ -89,7 +88,7 @@ Robot {
       ]
       endPoint Solid {
         translation -0.045 0.025 0
-        rotation 1 0 0 4.984670038318772
+        rotation 1 0 0 4.984670039173522
         children [
           DEF WHEEL Transform {
             rotation 0 0 1 1.57
@@ -134,7 +133,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.045 0.025 0
-        rotation 1 0 0 4.587350018801506
+        rotation 1 0 0 4.587350019221535
         children [
           USE WHEEL
         ]

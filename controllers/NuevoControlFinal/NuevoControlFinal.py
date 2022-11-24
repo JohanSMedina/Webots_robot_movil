@@ -29,9 +29,10 @@ def run_robot(robot):
     #!Constantes
     posActual = 0
     sizeNP = int(numpy.size(nuevaPosicion)/2)
-    prueba = 10
+    prueba = 20
     PropRad = 5.654866776/1.89899
-    #PropRad = 3.14159265359 * 0.969
+    #PropRad = 1.745329252*2
+    #PropRad = 2.827433388*1.055058
 
     ##TODO Instancas de los motores##
     iMotor = robot.getDevice('left wheel motor')
@@ -60,8 +61,8 @@ def run_robot(robot):
         xz[0] = float("{:.8f}".format(gps_value[0]))
         xz[1] = float("{:.8f}".format(gps_value[2]))
 
-        
-        comxz = nuevaPosicion[posActual]
+        if(posActual < 8):
+            comxz = nuevaPosicion[posActual]
 
         valposi = sIzquierda.getValue()#*Valores de la posicion de los sensores
         valposd = sDerecha.getValue()
@@ -74,7 +75,7 @@ def run_robot(robot):
             compararGiro = True
             #posActual += 1
 
-        if(posActual < sizeNP and flagGiro == True and posActual != 0 ):
+        if(posActual < sizeNP and flagGiro == True and posActual != 0  and  posActual != 8):
 
             if( comxz[1] == nuevaPosicion[posActual+1][1] ):###* Sentido de giro si z es igual
                 print(f"Movimiento en Z, XZ actual {xz}, posicion siguente {nuevaPosicion[posActual+1]}")
@@ -88,18 +89,31 @@ def run_robot(robot):
                         der = valposd-PropRad
                         #izq = valposi+3.14159265359
                         #der = valposd-3.14159265359
+                        if (posActual == 7):
+                            izq -= 0.125
+                            der += 0.125
                         iMotor.setPosition(izq)##TODO GIRO A LA DERECHA 90°
                         dMotor.setPosition(der)
                         compararGiro = True
+                        print("C1")
 
                     else:##* girar a la izquierda ##TODO GIRO A LA IZQUIERDA 90°
                         iMotor.setVelocity(max_speed)
                         dMotor.setVelocity(max_speed)
                         izq = valposi-PropRad
                         der = valposd+PropRad
+                        if (posActual == 3):
+                            izq -= 0.14
+                            der += 0.14
+
+                        if (posActual == 5):
+                            izq += 0.08
+                            der -= 0.08    
+                        
                         iMotor.setPosition(izq)##TODO GIRO A LA Izquierda 90°
                         dMotor.setPosition(der)
                         compararGiro = True
+                        print("C2")
                     
                 else:##* Si anterior z es mayor que el actual mira para arriba en la simulacion
 
@@ -111,6 +125,7 @@ def run_robot(robot):
                         iMotor.setPosition(izq)##TODO GIRO A LA DERECHA 90°
                         dMotor.setPosition(der)
                         compararGiro = True
+                        print("C3")
 
                     else:##*girar a la derecha
                         iMotor.setVelocity(max_speed)
@@ -120,6 +135,7 @@ def run_robot(robot):
                         iMotor.setPosition(izq)##TODO GIRO A LA Izquierda 90°
                         dMotor.setPosition(der)
                         compararGiro = True
+                        print("C4")
                          
             else:###* Sentido de giro si x es igual
 
@@ -133,14 +149,26 @@ def run_robot(robot):
                         iMotor.setPosition(izq)##TODO GIRO A LA Izquierda 90°
                         dMotor.setPosition(der)
                         compararGiro = True
+                        print("C5")
+
                     else:#TODO GIRO A LA DERECHA 90°
                         iMotor.setVelocity(max_speed)
                         dMotor.setVelocity(max_speed)
                         izq = valposi+PropRad
                         der = valposd-PropRad
+
+                        if(posActual == 4):
+                            izq -= 0.09
+                            der += 0.09
+
+                        if(posActual == 6):
+                            izq += 0.16
+                            der -= 0.16
+
                         iMotor.setPosition(izq)##TODO GIRO A LA DERECHA 90°
                         dMotor.setPosition(der)
                         compararGiro = True
+                        print("C6")
                 else:
                     if(nuevaPosicion[posActual+1][1]<comxz[1]):##TODO GIRO A LA DERECHA 90°
                         iMotor.setVelocity(max_speed)
@@ -150,15 +178,21 @@ def run_robot(robot):
                         iMotor.setPosition(izq)##TODO GIRO A LA DERECHA 90°
                         dMotor.setPosition(der)
                         compararGiro = True
+                        print("C7")
 
                     else:
                         iMotor.setVelocity(max_speed)
                         dMotor.setVelocity(max_speed)
-                        izq = valposi-PropRad
-                        der = valposd+PropRad
+                        izq = valposi-PropRad-0.085
+                        der = valposd+PropRad+0.085
+                        if(posActual == 1):
+                            izq -= 0.085
+                            der += 0.085
+
                         iMotor.setPosition(izq)##TODO GIRO A LA Izquierda 90°
                         dMotor.setPosition(der)
                         compararGiro = True
+                        print("C8")
 
             flagGiro = False
         
@@ -170,9 +204,9 @@ def run_robot(robot):
                     print("------")
                     print("Terminó el giro")
                     print("------")
-                    print(prueba)
+                    #print(prueba)
                     if(prueba == 0):
-                        prueba = 10
+                        prueba = 20
                         compararGiro = False
                         moverse = True
                     else:
@@ -188,13 +222,19 @@ def run_robot(robot):
 
         #TODO Verificar si llegó a la posision querida y detenerse de haber llegado
         #print(f"np: {nuevaPosicion[posActual+1]}")
-        PosQuerida = nuevaPosicion[posActual+1]
-        diffPosQueridaX = abs(PosQuerida[0] - xz[0])
-        #print(f"diffPosQueridaX: {diffPosQueridaX}")
-        diffPosQueridaY = abs(PosQuerida[1] - xz[1])
-        #print(f"diffPosQueridaY: {diffPosQueridaY}")
+        if(posActual < 8):
+            PosQuerida = nuevaPosicion[posActual+1]
+            diffPosQueridaX = abs(PosQuerida[0] - xz[0])
+            
+            diffPosQueridaY = abs(PosQuerida[1] - xz[1])
+        
+        
+        """if(posActual == 7):
+            print(f"diffPosQueridaX: {diffPosQueridaX}")
+            print(f"diffPosQueridaY: {diffPosQueridaY}")
+            print("----------------------")"""
 
-        if( diffPosQueridaX < 0.001 and diffPosQueridaY < 0.001):
+        if( diffPosQueridaX < 0.001 and diffPosQueridaY < 0.001 and posActual < 8):
 
             print("------")
             print("Llegó al punto")
@@ -207,8 +247,9 @@ def run_robot(robot):
             print(f"Actualizacion de lastXZ: {last_xz}")
             moverse = False
             posActual +=1
-            print(f"Actualizacion de XZ: {nuevaPosicion[posActual]}")
+            #print(f"Actualizacion de XZ: {nuevaPosicion[posActual]}")
             flagGiro = True
+            print(f"PosActual: {posActual}")
 
 
 
